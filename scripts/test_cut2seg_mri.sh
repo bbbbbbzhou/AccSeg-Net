@@ -1,0 +1,20 @@
+python test.py \
+--name experiment_cut2seg \
+--raw_A_dir ./preprocess/MRI_SEG/PROC/DCT/ \
+--raw_A_seg_dir ./preprocess/MRI_SEG/PROC/DCT/ \
+--raw_B_dir ./preprocess/MRI_SEG/PROC/MRI/ \
+--sub_list_A ./preprocess/MRI_SEG/PROC/train_DCT.txt \
+--sub_list_B ./preprocess/MRI_SEG/PROC/train_MRI.txt \
+--batch_size 1 \
+--model cut2seg_model_test \
+--netS duseunet \
+--no_dropout \
+--dataset_mode cut2seg_test \
+--input_nc 1  \
+--output_nc 1 \
+--output_nc_seg 1 \
+--test_B_dir ./preprocess/MRI_SEG/PROC/MRI/ \
+--test_img_list_file ./preprocess/MRI_SEG/PROC/test_MRI.txt \
+--checkpoints_dir ./checkpoints/MRI/ \
+--test_seg_output_dir ./Output/MRI/experiment_cut2seg \
+--which_epoch_S 21

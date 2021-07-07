@@ -1,0 +1,26 @@
+CUDA_VISIBLE_DEVICES=0 python train.py \
+--name experiment_cut2seg \
+--raw_A_dir ./preprocess/MRI_SEG/PROC/DCT/ \
+--raw_A_seg_dir ./preprocess/MRI_SEG/PROC/DCT/ \
+--raw_B_dir ./preprocess/MRI_SEG/PROC/MRI/ \
+--sub_list_A ./preprocess/MRI_SEG/PROC/train_DCT.txt \
+--sub_list_B ./preprocess/MRI_SEG/PROC/train_MRI.txt \
+--batch_size 4 \
+--angle 15 \
+--model cut2seg_model_train \
+--netG resnet_9blocks \
+--netD basic \
+--netS duseunet \
+--pool_size 50 \
+--no_dropout \
+--dataset_mode cut2seg_train \
+--input_nc 1  \
+--output_nc 1 \
+--output_nc_seg 1 \
+--lambda_GAN 1.0 \
+--lambda_NCE 1.0 \
+--lambda_CC 1.0 \
+--lambda_MIND 1.0 \
+--lambda_DICE 1.0 \
+--checkpoints_dir ./checkpoints/MRI/ \
+--display_id 0
