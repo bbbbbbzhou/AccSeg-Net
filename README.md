@@ -1,23 +1,23 @@
-# Anatomy-guided Multimodal Registration by Learning Segmentation without Ground Truth: Application to Intraprocedural CBCT/MR Liver Segmentation and Registration
+# Anatomy-Constrained Contrastive Learning for Synthetic Segmentation without Ground-truth
 
-Bo Zhou, Zachary Augenfeld, Julius Chapiro, S. Kevin Zhou, Chi Liu, James S. Duncan
+Bo Zhou, Chi Liu, James S. Duncan
 
-Medical Image Analysis (MedIA), 2021
+International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), 2021
 
-[[Paper](https://www.sciencedirect.com/science/article/pii/S1361841521000876)]
+[[Paper](https://www.xxx)]
 
-This repository contains the PyTorch implementation of APA2Seg-Net.
+This repository contains the PyTorch implementation of AccSeg-Net.
 
 ### Citation
 If you use this code for your research or project, please cite:
 
-    @article{zhou2021anatomy,
-      title={Anatomy-guided Multimodal Registration by Learning Segmentation without Ground Truth: Application to Intraprocedural CBCT/MR Liver Segmentation and Registration},
-      author={Zhou, Bo and Augenfeld, Zachary and Chapiro, Julius and Zhou, S Kevin and Liu, Chi and Duncan, James S},
-      journal={Medical Image Analysis},
-      pages={102041},
+    @inproceedings{zhou2020simultaneous,
+      title={Anatomy-constrained contrastive learning for synthetic segmentation without ground-truth},
+      author={Zhou, Bo and Liu, Chi and Duncan, James S},
+      booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+      pages={xxx},
       year={2021},
-      publisher={Elsevier}
+      organization={Springer}
     }
 
 
@@ -104,67 +104,63 @@ For testing, please specify the test data directory in the code options using: \
 ### To Run Our Code
 - Train the model
 ```bash
-python main.py \
---name experiment_apada2seg \
+python train.py \
+--name experiment_cut2seg \
 --raw_A_dir ./preprocess/MRI_SEG/PROC/DCT/ \
 --raw_A_seg_dir ./preprocess/MRI_SEG/PROC/DCT/ \
 --raw_B_dir ./preprocess/MRI_SEG/PROC/MRI/ \
 --sub_list_A ./preprocess/MRI_SEG/PROC/train_DCT.txt \
 --sub_list_B ./preprocess/MRI_SEG/PROC/train_MRI.txt \
---batchSize 2 \
+--batch_size 4 \
 --angle 15 \
---model apada2seg_model_train \
---which_model_netS duseunet \
+--model cut2seg_model_train \
+--netG resnet_9blocks \
+--netD basic \
+--netS duseunet \
 --pool_size 50 \
 --no_dropout \
---apada2seg_run_model Train \
---dataset_mode apada2seg_train \
+--dataset_mode cut2seg_train \
 --input_nc 1  \
 --output_nc 1 \
---output_nc_seg 2 \
---seg_norm DiceNorm \
---lambda_cc 0.1 \
---lambda_mind 0.1 \
---checkpoints_dir ./Checkpoints/MRI/ \
+--output_nc_seg 1 \
+--lambda_GAN 1.0 \
+--lambda_NCE 1.0 \
+--lambda_CC 1.0 \
+--lambda_MIND 1.0 \
+--lambda_DICE 1.0 \
+--checkpoints_dir ./checkpoints/MRI/ \
 --display_id 0
 ```
 where \
-`--lambda_cc` defines the weights parameter for CC loss. \
-`--lambda_mind`  defines the weights parameter for MIND loss. \
+`--lambda_NCE` defines the weights parameter for patch contrastive loss. \
+`--lambda_CC` defines the weights parameter for CC loss. \
+`--lambda_MIND`  defines the weights parameter for MIND loss. \
 Other hyperparameters can be adjusted in the code as well.
 
 - Test the model
 ```bash
-python main.py \
---name experiment_apada2seg \
+python test.py \
+--name experiment_cut2seg \
 --raw_A_dir ./preprocess/MRI_SEG/PROC/DCT/ \
 --raw_A_seg_dir ./preprocess/MRI_SEG/PROC/DCT/ \
 --raw_B_dir ./preprocess/MRI_SEG/PROC/MRI/ \
 --sub_list_A ./preprocess/MRI_SEG/PROC/train_DCT.txt \
 --sub_list_B ./preprocess/MRI_SEG/PROC/train_MRI.txt \
---batchSize 1 \
---model apada2seg_model_test \
---which_model_netS duseunet \
---pool_size 50 \
+--batch_size 1 \
+--model cut2seg_model_test \
+--netS duseunet \
 --no_dropout \
---apada2seg_run_model TestSeg \
---dataset_mode apada2seg_test \
+--dataset_mode cut2seg_test \
 --input_nc 1  \
---seg_norm DiceNorm \
 --output_nc 1 \
---output_nc_seg 2 \
+--output_nc_seg 1 \
 --test_B_dir ./preprocess/MRI_SEG/PROC/MRI/ \
 --test_img_list_file ./preprocess/MRI_SEG/PROC/test_MRI.txt \
---test_seg_output_dir ./Output/MRI/experiment_apada2seg \
---checkpoints_dir ./Checkpoints/MRI/ \
---which_epoch_S 10
+--checkpoints_dir ./checkpoints/MRI/ \
+--test_seg_output_dir ./Output/MRI/experiment_cut2seg \
+--which_epoch_S 21
 ```
 Sample training/test scripts are provided under './scripts/' and can be directly executed.
-
-
-### Registration based on APA2Seg-Net
-Please refer to the Yale BioImage Suite (Command Line Version) for implementation of our registeration pipeline.
-[[BIS Link](https://bioimagesuiteweb.github.io/bisweb-manual/CommandLineTools.html)]
 
 
 ### Contact 
