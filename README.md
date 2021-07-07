@@ -11,7 +11,7 @@ This repository contains the PyTorch implementation of AccSeg-Net.
 ### Citation
 If you use this code for your research or project, please cite:
 
-    @inproceedings{zhou2020simultaneous,
+    @inproceedings{zhou2021anatomy,
       title={Anatomy-constrained contrastive learning for synthetic segmentation without ground-truth},
       author={Zhou, Bo and Liu, Chi and Duncan, James S},
       booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
