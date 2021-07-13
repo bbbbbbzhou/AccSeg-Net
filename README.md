@@ -4,7 +4,7 @@ Bo Zhou, Chi Liu, James S. Duncan
 
 International Conference on Medical Image Computing and Computer Assisted Intervention (MICCAI), 2021
 
-[[Paper](https://www.xxx)]
+[[Paper](https://arxiv.org/abs/2107.05482)]
 
 This repository contains the PyTorch implementation of AccSeg-Net.
 
@@ -15,7 +15,6 @@ If you use this code for your research or project, please cite:
       title={Anatomy-constrained contrastive learning for synthetic segmentation without ground-truth},
       author={Zhou, Bo and Liu, Chi and Duncan, James S},
       booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
-      pages={xxx},
       year={2021},
       organization={Springer}
     }
